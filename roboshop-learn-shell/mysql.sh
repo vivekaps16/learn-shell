@@ -1,3 +1,6 @@
+source common.sh
+app_name=mysql
+
 dnf makecache
 
 dnf install mysql-server -y

@@ -1,3 +1,6 @@
+source common.sh
+app_name=redis
+
 dnf makecache
 dnf module disable redis -y
 dnf module enable redis:7 -y

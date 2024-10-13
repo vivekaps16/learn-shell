@@ -1,3 +1,5 @@
+source common.sh
+app_name=mongodb
 
 cp -r mongodb.repo /etc/yum.repos.d/
 dnf install mongodb-org -y 

@@ -1,3 +1,7 @@
+source common.sh
+app_name=rabbitmq
+
+
 dnf makecache
 
 cp -r rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo

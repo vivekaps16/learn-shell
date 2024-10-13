@@ -1,3 +1,6 @@
+source common.sh
+app_name=shipping
+
 dnf makecache
 
 cp -r shipping.service /etc/systemd/system/shipping.service
@@ -6,6 +9,7 @@ dnf install maven -y
 
 useradd roboshop
 
+rm -rf /app
 mkdir /app 
 
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
