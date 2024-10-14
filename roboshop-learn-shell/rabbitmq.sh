@@ -1,16 +1,27 @@
 source common.sh
 app_name=rabbitmq
 
-print_heading ""
-dnf makecache &>>$log_file
-print_heading ""
-cp -r rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$log_file
+if [ -z "$1" ]; then
+  echo INput Rabbitmq Password is missing
+  exit 1
+fi
+
+RABBITMQ_PASSWORD=$1
+
+print_heading "Copy RabbitMQ Repo file"
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$log_file
+status_check $?
+
+print_heading "Install RabbitMQ Server"
 dnf install rabbitmq-server -y &>>$log_file
-print_heading ""
+status_check $?
+
+print_heading "Start RabbitMQ Service"
 systemctl enable rabbitmq-server &>>$log_file
-print_heading ""
 systemctl start rabbitmq-server &>>$log_file
-print_heading ""
-rabbitmqctl add_user roboshop roboshop123 &>>$log_file
+status_check $?
+
+print_heading "Add Application User"
+rabbitmqctl add_user roboshop $RABBITMQ_PASSWORD &>>$log_file
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$log_file
-systemctl status rabbitmq-servert ; tail -f /var/log/messages &>>$log_file
+status_check $?
